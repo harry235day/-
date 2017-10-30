@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>仿腾讯新闻图片轮播</title>
+	<meta name="keywords" content="关键词1,关键词2">
+	<meta name="description" content="描述:网站内容的大概介绍">
+	<link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+
+	<style>/*css样式的存放位置*/
+	*{/*通用选择器:选择到所有的标签元素*/
+		margin:0px;/*外边距*/padding:0px;/*内边距*/
+	}
+        /*
+            第一步:找到对应的标签元素
+            第二步:对相应的标签设置样式
+            */
+            #box{/*# id选择器*/
+            	width:720px;/*宽度*/height:400px;/*高度*/
+            	/*一个优秀的开发工程师一定是一个为服务器、CPU考虑的:网页加载速度*/
+            	/*background:#93c;背景颜色: 红 99  绿 33 蓝 cc*/
+            	margin:100px auto;/*上下为100px  左右居中*/
+            }
+            .bigImg{/*. class选择器*/
+            	width:720px;height:330px;background:#c03;
+            	margin:0 auto;
+            	border: 1px solid #ccc;
+            	position: relative;
+            }
+            .nav{
+            	height:60px;
+            	margin-top:10px;/*上外边距*/
+            	/*background:#093;*/
+            	overflow:hidden;/*超出隐藏*/
+            	border:1px solid red;/*边框:宽度 类型(实线) 颜色*/
+            	margin:0 auto;
+            }
+            .nav {
+            	position:relative;/*相对定位:相对于元素本身的位置来定位*/
+            	left:0px;
+            	top:0px;
+            	right: 0px;
+            	margin:0 auto;
+            	/*transform:translate(0px);*/
+            }
+            .nav ul li{
+            	border-left: 1px solid #ccc;
+            	border-right: 1px solid #ccc;
+            	list-style:none;/*去除前面的圆点*/
+            	width:80px;height:60px;
+            	/*background:#ff3;*/
+            	/*左浮动:与父元素的左端对齐依次往右排列*/
+            	float:left;
+            	margin-right: 14px;
+            	cursor:pointer;/*鼠标显示手的形状*/
+            }
+            .drction_img{
+            	width: 100%;
+            	position: absolute;
+            	top: 150px;
+            	left: 0px;
+            }
+            #left{
+            	position: absolute;
+            	left: 5px;
+            }
+            #right{
+            	position: absolute;
+            	right: 5px;
+            }
+           
+        </style>
+    </head>
+    <body><!--身体:用户能够看到的内容-->
+    	<!--盒子模型标签div 宽高 背景 边框-->
+    	<div id="box"><!--躯干 id="自定义名字" 唯一性(身份证号) 见名知意 不用中文(拼音) -->
+    		<div class="bigImg"><!--class="自定义名字" 重复性(姓名)-->
+    			<!--img图片四要素: src(图片路劲) width height alt-->
+    			<img src="img/img1.png" width="720" height="330" alt="三个美女" class="big_img">
+    			<div class="drction_img"> 
+    				<img src="img/left.png" id="left">
+    				<img src="img/right.png" id="right">
+    			</div>
+    		</div>
+    		
+    		
+    		<div class="nav">
+    			<ul><!--无序列表标签-->
+    				<li><img src="img/img1.png" width="80" height="60"></li>
+    				<li><img src="img/img2.png" width="80" height="60"></li>
+    				<li><img src="img/img3.png" width="80" height="60"></li>
+    				<li><img src="img/img1.png" width="80" height="60"></li>
+    				<li><img src="img/img2.png" width="80" height="60"></li>
+    				<li><img src="img/img3.png" width="80" height="60"></li>
+    				
+    				
+    			</ul>
+
+    		</div>
+    	</div>
+    	<script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    	<script>
+    		//c初始化positioon
+    		var position =0;
+
+            //alert($);//js弹出jquery的代理函数$
+            //点击切换大图图片
+                //$(".nav ul li")找到所有的li
+            $(".nav ul li").click(function(){//点击实现什么效果
+                //点击谁就获取到谁下面的img图片路劲
+                    //$(this)点击谁就指代谁
+                    //$(this).find("img")找到被点击的li里面的img标签
+                    //attr("src")获取到img的src属性值 attr("src")
+                    var url = $(this).find("img").attr("src");
+                //console.log(src);//在审查元素控制台里面显示出来
+                //把获取到的src值赋值给大图图片的src 通过attr()来设置
+                //attr("src",url) 设置src属性值
+                $(".big_img").attr("src",url);
+
+                //点击移动ul盒子
+                var index = $(this).index();//点击谁就获取谁的序列号
+
+                position =index;
+
+                //console.log(index);
+                if ( index <= 3 )//前面四个元素点击不动
+                {
+                    //通过animate自定义动画在一秒钟之内改变left
+                    $(".nav ul").animate({"left":"0px"},1000);
+                }else if (index > 3 && index <=7 )//中间的点击每次移动一个li宽度
+                {
+                	$(".nav ul").animate({"left":-(index-3)*94+"px"},1000);
+                }else{//最后四个元素  点击也不动
+                	$(".nav ul").animate({"left":"-376px"},1000);
+                }
+            });
+            $('#left').click(function(event) {
+            	/* Act on the event */
+				// var list document.getElementByName("li");
+				var list = $('.nav ul li');
+				if(position==0){
+					return false;
+				}
+				position--;	
+				var url = list[position].getElementsByTagName('img')[0].src;
+				$(".big_img").attr("src",url);
+
+			});  
+            $('#right').click(function(event) {
+            	/* Act on the event */
+
+            	var list = $('.nav ul li');
+				if(position==list.length-1){
+					return false;
+				}
+				position++;	
+				var url = list[position].getElementsByTagName('img')[0].src;
+				$(".big_img").attr("src",url);
+
+            });        
+        </script>
+    </body>
+    </html>
