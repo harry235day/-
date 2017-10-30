@@ -70,7 +70,7 @@
             	position: absolute;
             	right: 5px;
             }
-           
+
         </style>
     </head>
     <body><!--身体:用户能够看到的内容-->
@@ -104,6 +104,8 @@
     	<script>
     		//c初始化positioon
     		var position =0;
+
+    		setInterval(playing,3000);
 
             //alert($);//js弹出jquery的代理函数$
             //点击切换大图图片
@@ -158,8 +160,18 @@
 				position++;	
 				var url = list[position].getElementsByTagName('img')[0].src;
 				$(".big_img").attr("src",url);
-
-            });        
+            }); 
+            //定时方法       
+            function playing(){
+            	//拿到ul 里所有的 li
+            	var list = $('.nav ul li');
+            	if(position==list.length-1){
+            		position =0;
+            	}
+            	position++;	
+				var url = list[position].getElementsByTagName('img')[0].src;
+				$(".big_img").attr("src",url);	
+            }
         </script>
     </body>
     </html>
